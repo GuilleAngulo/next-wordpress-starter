@@ -1,5 +1,64 @@
 import { gql } from '@apollo/client';
 
+export const QUERY_PAGINATED_POSTS = gql`
+  query($first: Int, $last: Int, $after: String, $before: String) {
+    posts(first: $first, last: $last, after: $after, before: $before) {
+      edges {
+        node {
+          author {
+            node {
+              avatar {
+                height
+                url
+                width
+              }
+              id
+              name
+              slug
+            }
+          }
+          id
+          categories {
+            edges {
+              node {
+                categoryId
+                id
+                name
+                slug
+              }
+            }
+          }
+          content
+          date
+          excerpt
+          featuredImage {
+            node {
+              altText
+              caption
+              sourceUrl
+              srcSet
+              sizes
+              id
+            }
+          }
+          modified
+          modifiedGmt
+          postId
+          title
+          slug
+          isSticky
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        endCursor
+        startCursor
+      }
+    }
+  }
+`;
+
 export const QUERY_ALL_POSTS = gql`
   {
     posts(first: 10000) {

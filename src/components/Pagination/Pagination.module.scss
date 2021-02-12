@@ -1,0 +1,36 @@
+@import "styles/settings/__settings";
+
+.nav {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4em;
+
+  @media (max-width: 480px) {
+    svg {
+      display: none;
+    }
+  }
+
+  a {
+    display: flex;
+    gap: 0.3em;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    color: $color-gray-800;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid $color-gray-200;
+    padding: 0.2em 0.8em;
+    border-radius: 0.4em;
+
+    &:hover {
+      color: $color-primary;
+      background-color: $color-gray-50;
+    }
+  }
+}
+
+.prev {
+  margin-right: auto;
+}

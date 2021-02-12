@@ -3,7 +3,14 @@ import { getApolloClient } from 'lib/apollo-client';
 import { updateUserAvatar } from 'lib/users';
 import { sortObjectsByDate } from 'lib/datetime';
 
-import { QUERY_ALL_POSTS, getQueryPostBySlug, getQueryPostsByAuthorSlug, getQueryPostsByCategoryId } from 'data/posts';
+import {
+  QUERY_ALL_POSTS,
+  getQueryPostBySlug,
+  getQueryPostsByAuthorSlug,
+  getQueryPostsByCategoryId,
+  getPaginatedPosts,
+  QUERY_PAGINATED_POSTS,
+} from 'data/posts';
 
 /**
  * postPathBySlug
@@ -47,6 +54,45 @@ export async function getAllPosts(options) {
   return {
     posts: Array.isArray(posts) && posts.map(mapPostData),
   };
+}
+
+/**
+ * getPosts
+ */
+
+export async function getPosts(options) {
+  const apolloClient = getApolloClient();
+
+  const data = await apolloClient.query({
+    query: QUERY_PAGINATED_POSTS,
+    options,
+  });
+
+  const posts = data.posts.edges.map(({ node = {} }) => node);
+
+  return {
+    posts: Array.isArray(posts) && posts.map(mapPostData),
+  };
+}
+
+/**
+ * normalizePosts
+ */
+export function normalizePosts(data) {
+  const posts = data?.posts?.edges.map(({ node = {} }) => node);
+  const pageInfo = data?.posts?.pageInfo;
+
+  return {
+    posts: Array.isArray(posts) && posts.map(mapPostData),
+    pageInfo,
+  };
+}
+
+/**
+ * sortStickyPosts
+ */
+export function sortStickyPosts(posts = []) {
+  return [...posts].sort((post) => (post.isSticky ? -1 : 1));
 }
 
 /**

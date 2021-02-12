@@ -1,5 +1,5 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
-import { concatPagination } from '@apollo/client/utilities';
+import { concatPagination, relayStylePagination } from '@apollo/client/utilities';
 
 import { removeLastTrailingSlash } from 'lib/site';
 
@@ -26,6 +26,7 @@ export function _createApolloClient() {
         fields: {
           allPosts: concatPagination(),
           allPages: concatPagination(),
+          posts: relayStylePagination(),
         },
       },
     },

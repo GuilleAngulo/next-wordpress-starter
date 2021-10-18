@@ -34,6 +34,12 @@ module.exports = function sitemap(nextConfig = {}) {
       posts.forEach((post) => {
         const { title, slug } = post;
 
+        fabric.nodeCanvas.registerFont('./public/Inter-Regular.ttf', {
+          family: 'Inter',
+          weight: 'regular',
+          style: 'normal',
+        });
+
         const canvas = new fabric.StaticCanvas(null, {
           width,
           height,
@@ -50,6 +56,7 @@ module.exports = function sitemap(nextConfig = {}) {
           width: headlineWidth,
           height: headlineHeight,
           fill: '#303030',
+          fontFamily: 'Inter',
           fontWeight: 600,
           fontSize: 60,
           lineHeight: 1,
@@ -67,6 +74,7 @@ module.exports = function sitemap(nextConfig = {}) {
             width,
             height: footerHeight,
             fill: '#303030',
+            fontFamily: 'Inter',
             fontWeight: 600,
             fontSize: 30,
             textAlign: 'center',
